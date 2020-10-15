@@ -354,7 +354,7 @@ namespace vXboxInterfaceWrap {
 
 
         /// <summary>
-        /// Indicates whether this device is owned and connected.
+        /// Indicates whether this device is owned by and connected to the calling application.
         /// </summary>
         public bool Acquired => VirtualXboxInterface.isControllerOwned(SlotIndex);
 
@@ -366,11 +366,11 @@ namespace vXboxInterfaceWrap {
 
 
         /// <param name="index">Slot index of the vXbox device that this object should manage. Range: 1 to 4.</param>
-        /// <param name="forceOwnership">If true, forces an un-plug before trying to acquire the device.</param>
+        /// <param name="forceOwnership">If true, forces an un-plug before trying to acquire the device. Warning: This parameter may remove a vXbox device that is owned by another process.</param>
         public VirtualXboxController(uint index, bool forceOwnership = false)
         {
             if (index < 1 || index > 4) 
-                throw new ArgumentException("Invalid slot index. Range: 1 to 4 but was " + index + '.');
+                throw new ArgumentException($"Invalid slot index. Range: 1 to 4 but was {index}.");
 
             SlotIndex = index;
 
@@ -380,9 +380,7 @@ namespace vXboxInterfaceWrap {
             System.Diagnostics.Debug.WriteLine($"# Controller {SlotIndex} exists?: {VirtualXboxInterface.isControllerExists(SlotIndex)}");
 #endif
 
-            if (forceOwnership)
-                Release();
-            Acquire();
+            Acquire(forceOwnership);
 
 #if DEBUG
             System.Diagnostics.Debug.WriteLine($"# Controller {SlotIndex} acquired?: {Acquired}");
@@ -396,11 +394,14 @@ namespace vXboxInterfaceWrap {
         /// Connect to the virtual controller.
         /// </summary>
         /// <returns>TRUE if operation succeeds. Otherwise FALSE.</returns>
-        public void Acquire()
+        /// <exception cref="InvalidOperationException">When the virtual bus was not found.</exception>
+        /// <param name="force">If true, forces an un-plug before trying to acquire the device. Warning: This parameter may remove a vXbox device that is owned by another process.</param>
+        public bool Acquire(bool force = false)
         {
             if (!VirtualXboxInterface.isVBusExists())
                 throw new InvalidOperationException("The virtual bus was not found. You can plug-in vXbox devices only if the bus exists.");
-            VirtualXboxInterface.PlugIn(SlotIndex);
+            Release(force);
+            return VirtualXboxInterface.PlugIn(SlotIndex);
         }
 
 
@@ -408,11 +409,13 @@ namespace vXboxInterfaceWrap {
         /// Disconnect from the virtual controller.
         /// </summary>
         /// <returns>TRUE if operation succeeds. Otherwise FALSE.</returns>
-        public bool Release()
+        /// <exception cref="InvalidOperationException">When the virtual bus was not found.</exception>
+        /// <param name="force">If true, forces an un-plug of the device. Warning: This parameter may remove a vXbox device that is owned by another process.</param>
+        public bool Release(bool force = false)
         {
             if (!VirtualXboxInterface.isVBusExists())
                 throw new InvalidOperationException("The virtual bus was not found. You can un-plug vXbox devices only if the bus exists.");
-            return VirtualXboxInterface.UnPlug(SlotIndex) || VirtualXboxInterface.UnPlugForce(SlotIndex);
+            return force ? VirtualXboxInterface.UnPlugForce(SlotIndex) : VirtualXboxInterface.UnPlug(SlotIndex);
         }
 
 
@@ -422,7 +425,7 @@ namespace vXboxInterfaceWrap {
         public void Dispose()
         {
             Reset();
-            Release();
+            Release(Acquired);
         }
 
 
@@ -516,13 +519,17 @@ namespace vXboxInterfaceWrap {
         /// Presses a button.
         /// </summary>
         /// <param name="button">The button that you want pressed.</param>
+        /// <param name="pressure">Pressure amount if <c>button</c> is the <c>Left</c>- or <c>RightTrigger</c>. Range: 0-255.
+        /// A value of 0 means the trigger will be released.
+        /// </param>
         /// <returns>TRUE if operation succeeds. Otherwise FALSE.</returns>
-        public bool Press(Button button)
+        public bool Press(Button button, byte pressure = 255)
         {
+            if (pressure == 0) Release(button);
             switch (button)
             {
-                case Button.LeftTrigger: return VirtualXboxInterface.SetTriggerL(SlotIndex, Convert.ToByte(255));
-                case Button.RightTrigger: return VirtualXboxInterface.SetTriggerR(SlotIndex, Convert.ToByte(255));
+                case Button.LeftTrigger: return VirtualXboxInterface.SetTriggerL(SlotIndex, pressure);
+                case Button.RightTrigger: return VirtualXboxInterface.SetTriggerR(SlotIndex, pressure);
                 case Button.A: return VirtualXboxInterface.SetBtnA(SlotIndex, true);
                 case Button.B: return VirtualXboxInterface.SetBtnB(SlotIndex, true);
                 case Button.X: return VirtualXboxInterface.SetBtnX(SlotIndex, true);
@@ -554,8 +561,8 @@ namespace vXboxInterfaceWrap {
             if (delay > 0) Thread.Sleep(delay);
             switch (button)
             {
-                case Button.LeftTrigger: return VirtualXboxInterface.SetTriggerL(SlotIndex, Convert.ToByte(0));
-                case Button.RightTrigger: return VirtualXboxInterface.SetTriggerR(SlotIndex, Convert.ToByte(0));
+                case Button.LeftTrigger: return VirtualXboxInterface.SetTriggerL(SlotIndex,0);
+                case Button.RightTrigger: return VirtualXboxInterface.SetTriggerR(SlotIndex, 0);
                 case Button.A: return VirtualXboxInterface.SetBtnA(SlotIndex, false);
                 case Button.B: return VirtualXboxInterface.SetBtnB(SlotIndex, false);
                 case Button.X: return VirtualXboxInterface.SetBtnX(SlotIndex, false);
