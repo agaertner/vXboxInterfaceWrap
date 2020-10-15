@@ -25,7 +25,7 @@ using (var myController = new VirtualXboxController(1, bool forceOwnership = fal
     myController.Stroke(Button.LeftTrigger, Button.A); // The first parameter acts as a modifier which is pressed first and released last.
     myController.Stroke(Button.LeftTrigger, new []{ Button.A, Button.B }); // Similar to above. The buttons get released in reverse order.
     
-    myController.GetVibrationFrequencies(); // Returns a tuple in which the first item is the low-frequency and the second item the high-frequency rumble motor value.
+    myController.GetRumbleMotorFrequencies(); // Returns a tuple in which the first item is the low-frequency and the second item the high-frequency rumble motor value.
     
     myController.Exists(); // True if the virtual bus and controller exists in the managed slot index.
     myController.Acquire(bool force = false); // If the controller wasn't acquired on construction you can manually try again with this call.
