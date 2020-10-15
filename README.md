@@ -1,7 +1,7 @@
 # vXboxInterfaceWrap
 
-This is a C# wrapper for [vXboxInterface](https://github.com/shauleiz/vXboxInterface/releases/latest) by [shauleiz](https://github.com/shauleiz/).
-
+This is a C# wrapper for [vXboxInterface](https://github.com/shauleiz/vXboxInterface/releases/latest) by [shauleiz](https://github.com/shauleiz/).  
+The ``vXboxInterface.dll`` needs to be placed alongside the ``vXboxInterfaceWrap.dll``.
 
 ```csharp
 using vXboxInterfaceWrap;
@@ -10,14 +10,14 @@ using (var myController = new VirtualXboxController(1, bool forceOwnership = fal
 
     // The Button enumeration is provided in the vXboxInterfaceWrap namespace.
     
-    myController.Press(Button.A); // Presses and holds the A button.
+    myController.Press(Button.A); // Presses (and holds) the A button.
     myController.Release(Button.A); // Releases the A button.
-    myController.SetAxisX(); // Set the X-axis of the left stick.
-    myController.SetAxisY(); // Set the Y-axis of the left stick.
-    myController.SetAxisRx(); // Set the X-axis of the right stick.
-    myController.SetAxisRy(); // Set the Y-axis of the right stick.
+    myController.SetAxisX(0.42 * AXIS_MAX); // Set the X-axis of the left stick. Usually called with a normalized value of an direction vector.
+    myController.SetAxisY(0.42 * AXIS_MAX); // Set the Y-axis of the left stick. Usually called with a normalized value of an direction vector.
+    myController.SetAxisRx(0.42 * AXIS_MAX); // Set the X-axis of the right stick. Usually called with a normalized value of an direction vector.
+    myController.SetAxisRy(0.42 * AXIS_MAX); // Set the Y-axis of the right stick. Usually called with a normalized value of an direction vector.
     
-    // The implementation provides several button stroke variation to avoid Press/Releases.
+    // The implementation provides several button stroke variations to avoid Press/Release calls for quick interactions.
     
     myController.Stroke(Button.A);
     myController.Stroke(Button.A, 42); // Will press the button 42 times.
@@ -33,7 +33,7 @@ using (var myController = new VirtualXboxController(1, bool forceOwnership = fal
 }
 ```
 Note that the ``VirtualXboxController`` implements ``IDisposable``.   
-``Dispose`` resets and releases the device if its acquired by the calling application.
+``Dispose`` resets and releases the device if it's acquired by the calling application.
 
 # Fields
 
@@ -42,5 +42,5 @@ public const AXIS_MAX; // Highest value an axis can be set to.
 public const AXIS_MIN; // Lowest value an axis can be set to.
 
 public bool Acquired; // Indicates if the device is owned by and connected to the calling application.
-public uint SlotIndex; // The slot index which is set on construction and which is managed by this object.
+public uint SlotIndex; // The slot index that is set on construction and that is managed by this object.
 ```
