@@ -365,6 +365,7 @@ namespace vXboxInterfaceWrap {
         public uint SlotIndex { get; }
 
 
+        /// <exception cref="ArgumentException">When the slot index is outside the range 1 to 4.</exception>
         /// <param name="index">Slot index of the vXbox device that this object should manage. Range: 1 to 4.</param>
         /// <param name="forceOwnership">If true, forces an un-plug before trying to acquire the device. Warning: This parameter may remove a vXbox device that is owned by another process.</param>
         public VirtualXboxController(uint index, bool forceOwnership = false)
