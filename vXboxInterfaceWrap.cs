@@ -354,6 +354,12 @@ namespace vXboxInterfaceWrap {
 
 
         /// <summary>
+        /// The highest value a rumble motor frequency can be.
+        /// </summary>
+        public const int VIBRATION_MAX = 65535;
+
+
+        /// <summary>
         /// Indicates whether this device is owned by and connected to the calling application.
         /// </summary>
         public bool Acquired => VirtualXboxInterface.isControllerOwned(SlotIndex);
@@ -362,7 +368,7 @@ namespace vXboxInterfaceWrap {
         /// <summary>
         /// The index of the slot this device is plugged into.
         /// </summary>
-        public uint SlotIndex { get; }
+        public readonly uint SlotIndex;
 
 
         /// <exception cref="ArgumentException">When the slot index is outside the range 1 to 4.</exception>
@@ -655,17 +661,17 @@ namespace vXboxInterfaceWrap {
 
 
         /// <summary>
-        /// Gets the current vibration values of the left and right rumble motors.<para/>
+        /// Gets the current vibration percentages of the left and right rumble motors.<para/>
         /// </summary>
         /// <exception cref="InvalidOperationException">When the vibration values weren't retrievable.</exception>
-        /// <returns>A tuple in which the first item contains the value of the low-frequency rumble motor and<para/>
-        /// the second item the value of the high-frequency rumble motor.
+        /// <returns>A tuple in which the first item contains the utilization percentage of the low-frequency rumble motor and<para/>
+        /// the second item the utilization percentage of the high-frequency rumble motor.
         /// </returns>
-        public (ushort, ushort) GetRumbleMotorFrequencies() {
+        public (float, float) GetRumbleMotorUsage() {
             var pxInput = new VirtualXboxInterface.PXINPUT_VIBRATION();
             if (!VirtualXboxInterface.GetVibration(SlotIndex, ref pxInput))
                 throw new InvalidOperationException("Unable to get the vibration values of the rumble motors.");
-            return (pxInput.wLeftMotorSpeed, pxInput.wRightMotorSpeed);
+            return ((float)pxInput.wLeftMotorSpeed / VIBRATION_MAX, (float)pxInput.wRightMotorSpeed / VIBRATION_MAX);
         }
     }
 }

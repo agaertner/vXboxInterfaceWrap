@@ -25,7 +25,7 @@ using (var myController = new VirtualXboxController(1, bool forceOwnership = fal
     myController.Stroke(Button.LeftTrigger, Button.A); // The first parameter acts as a modifier which is pressed first and released last.
     myController.Stroke(Button.LeftTrigger, new []{ Button.A, Button.B }); // Similar to above. The buttons get released in reverse order.
     
-    myController.GetRumbleMotorFrequencies(); // Returns a tuple in which the first item is the low-frequency and the second item the high-frequency rumble motor value.
+    myController.GetRumbleMotorUsage(); // A tuple in which the first item contains the utilization percentage of the low-frequency rumble motor and the second item the utilization percentage of the high-frequency rumble motor.
     
     myController.Exists(); // True if the virtual bus and controller exists in the managed slot index.
     myController.Acquire(bool force = false); // If the controller wasn't acquired on construction you can manually try again with this call.
@@ -38,9 +38,9 @@ Note that the ``VirtualXboxController`` implements ``IDisposable``.
 # Fields
 
 ```csharp
-public const AXIS_MAX; // Highest value an axis can be set to.
-public const AXIS_MIN; // Lowest value an axis can be set to.
-
+public const int AXIS_MAX; // Highest value an axis can be set to.
+public const int AXIS_MIN; // Lowest value an axis can be set to.
+public const int VIBRATION_MAX; // Highest value a rumble motor frequency can be.
 public bool Acquired; // Indicates if the device is owned by and connected to the calling application.
 public uint SlotIndex; // The slot index that is set on construction and that is managed by this object.
 ```
