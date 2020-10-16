@@ -42,5 +42,5 @@ public const int AXIS_MAX; // Highest value an axis can be set to.
 public const int AXIS_MIN; // Lowest value an axis can be set to.
 public const int VIBRATION_MAX; // Highest value a rumble motor frequency can be.
 public bool Acquired; // Indicates if the device is owned by and connected to the calling application.
-public uint SlotIndex; // The slot index that is set on construction and that is managed by this object.
+public readonly uint SlotIndex; // The slot index that is set on construction and that is managed by this object.
 ```
