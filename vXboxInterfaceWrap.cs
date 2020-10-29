@@ -14,7 +14,7 @@ namespace vXboxInterfaceWrap {
         /// <summary>
         /// Use this function to verify that the bus exists. You can plug-in vXbox devices only if the bus exists.
         /// </summary>
-        /// <returns>TRUE if  ScpVBus exists. Otherwise FALSE.</returns>
+        /// <returns><see langword="True"/> if ScpVBus exists. Otherwise <see langword="false"/>.</returns>
         [DllImport("vXboxInterface.dll")]
         internal static extern bool isVBusExists();
 
@@ -22,7 +22,7 @@ namespace vXboxInterfaceWrap {
         /// Virtual bus ScpVBus has 4 slots for vXbox devices. Use this function to query the number of slots that it is possible to plug-in new device into.
         /// </summary>
         /// <param name="nSlots">Pointer to number of empty slots. Range: 0 to 4</param>
-        /// <returns>TRUE if function succeeded. Otherwise FALSE.</returns>
+        /// <returns><see langword="True"/> if function succeeded. Otherwise <see langword="false"/>.</returns>
         [DllImport("vXboxInterface.dll")]
         internal static extern bool GetNumEmptyBusSlots(IntPtr nSlots);
 
@@ -30,16 +30,18 @@ namespace vXboxInterfaceWrap {
         /// Check if a specified slot is occupied by a vXbox device (Controller).
         /// </summary>
         /// <param name="UserIndex">Slot Index. Range: 1 to 4</param>
-        /// <returns>TRUE if controller plugged-in. Otherwise FALSE.</returns>
+        /// <returns><see langword="True"/> if controller plugged-in. Otherwise <see langword="false"/>.</returns>
         [DllImport("vXboxInterface.dll")]
         internal static extern bool isControllerExists(uint UserIndex);
 
         /// <summary>
         /// Check if a vXbox device (Controller) is owned by the calling application.
-        /// Owned means Exists (=was plugged in) and the ID of the plugging process is the same as that of the current process.
         /// </summary>
+        /// <remarks>
+        /// Owned means Exists (=was plugged in) and the ID of the plugging process is the same as that of the current process.
+        /// </remarks>
         /// <param name="UserIndex">Slot Index. Range: 1 to 4</param>
-        /// <returns>TRUE if controller owned by application. Otherwise FALSE.</returns>
+        /// <returns><see langword="True"/> if controller owned by application. Otherwise <see langword="false"/>.</returns>
         [DllImport("vXboxInterface.dll")]
         internal static extern bool isControllerOwned(uint UserIndex);
         #endregion
@@ -47,29 +49,35 @@ namespace vXboxInterfaceWrap {
         #region Plugged-in/Unplug Functions
         /// <summary>
         /// Plug-in a vXbox device in a specified slot.
-        /// The operation will fail unless the bus exists and the slot is free.
         /// </summary>
+        /// <remarks>
+        /// The operation will fail unless the bus exists and the slot is free.
+        /// </remarks>
         /// <param name="idx">Slot Index. Range: 1 to 4</param>
-        /// <returns>TRUE if  function succeeded. Otherwise FALSE.</returns>
+        /// <returns><see langword="True"/> if function succeeded. Otherwise <see langword="false"/>.</returns>
         [DllImport("vXboxInterface.dll")]
         internal static extern bool PlugIn(uint UserIndex);
 
         /// <summary>
         /// Unplug a vXbox device from a specified slot.
-        /// The operation will fail unless the bus exists and the slot is occupied by an owned device.
         /// </summary>
+        /// <remarks>
+        /// The operation will fail unless the bus exists and the slot is occupied by an owned device.
+        /// </remarks>
         /// <param name="UserIndex">Slot Index. Range: 1 to 4</param>
-        /// <returns>TRUE if function succeeded. Otherwise FALSE.</returns>
+        /// <returns><see langword="True"/> if function succeeded. Otherwise <see langword="false"/>.</returns>
         [DllImport("vXboxInterface.dll")]
         internal static extern bool UnPlug(uint UserIndex);
 
         /// <summary>
         /// Unplug a vXbox device from a specified slot.
         /// The operation will fail unless the bus exists and the slot is occupied by a device.
-        /// Warning: This function may remove a vXbox device that is owned by another process.
         /// </summary>
+        /// <remarks>
+        /// Warning: This function may remove a vXbox device that is owned by another process.
+        /// </remarks>
         /// <param name="UserIndex">Slot Index. Range: 1 to 4</param>
-        /// <returns>TRUE if function succeeded. Otherwise FALSE.</returns>
+        /// <returns><see langword="True"/> if function succeeded. Otherwise <see langword="false"/>.</returns>
         [DllImport("vXboxInterface.dll")]
         internal static extern bool UnPlugForce(uint UserIndex);
         #endregion
@@ -81,8 +89,8 @@ namespace vXboxInterfaceWrap {
         /// Button A Pressed/Released
         /// </summary>
         /// <param name="UserIndex">Slot Index. Range: 1 to 4</param>
-        /// <param name="Press">TRUE (Button Pressed) or FALSE (Button Released)</param>
-        /// <returns>TRUE if function succeeded. Otherwise FALSE.</returns>
+        /// <param name="Press"><see langword="True"/> (Button Pressed) or <see langword="false"/> (Button Released)</param>
+        /// <returns><see langword="True"/> if function succeeded. Otherwise <see langword="false"/>.</returns>
         [DllImport("vXboxInterface.dll")]
         internal static extern bool SetBtnA(uint UserIndex, bool Press);
 
@@ -90,8 +98,8 @@ namespace vXboxInterfaceWrap {
         /// Button B Pressed/Released
         /// </summary>
         /// <param name="UserIndex">Slot Index. Range: 1 to 4</param>
-        /// <param name="Press">TRUE (Button Pressed) or FALSE (Button Released)</param>
-        /// <returns>TRUE if function succeeded. Otherwise FALSE.</returns>
+        /// <param name="Press"><see langword="True"/> (Button Pressed) or <see langword="false"/> (Button Released)</param>
+        /// <returns><see langword="True"/> if function succeeded. Otherwise <see langword="false"/>.</returns>
         [DllImport("vXboxInterface.dll")]
         internal static extern bool SetBtnB(uint UserIndex, bool Press);
 
@@ -99,8 +107,8 @@ namespace vXboxInterfaceWrap {
         /// Button X Pressed/Released
         /// </summary>
         /// <param name="UserIndex">Slot Index. Range: 1 to 4</param>
-        /// <param name="Press">TRUE (Button Pressed) or FALSE (Button Released)</param>
-        /// <returns>TRUE if function succeeded. Otherwise FALSE.</returns>
+        /// <param name="Press"><see langword="True"/> (Button Pressed) or <see langword="false"/> (Button Released)</param>
+        /// <returns><see langword="True"/> if function succeeded. Otherwise <see langword="false"/>.</returns>
         [DllImport("vXboxInterface.dll")]
         internal static extern bool SetBtnX(uint UserIndex, bool Press);
 
@@ -108,8 +116,8 @@ namespace vXboxInterfaceWrap {
         /// Button Y Pressed/Released
         /// </summary>
         /// <param name="UserIndex">Slot Index. Range: 1 to 4</param>
-        /// <param name="Press">TRUE (Button Pressed) or FALSE (Button Released)</param>
-        /// <returns>TRUE if function succeeded. Otherwise FALSE.</returns>
+        /// <param name="Press"><see langword="True"/> (Button Pressed) or <see langword="false"/> (Button Released)</param>
+        /// <returns><see langword="True"/> if function succeeded. Otherwise <see langword="false"/>.</returns>
         [DllImport("vXboxInterface.dll")]
         internal static extern bool SetBtnY(uint UserIndex, bool Press);
 
@@ -117,8 +125,8 @@ namespace vXboxInterfaceWrap {
         /// Button Start Pressed/Released
         /// </summary>
         /// <param name="UserIndex">Slot Index. Range: 1 to 4</param>
-        /// <param name="Press">TRUE (Button Pressed) or FALSE (Button Released)</param>
-        /// <returns>TRUE if function succeeded. Otherwise FALSE.</returns>
+        /// <param name="Press"><see langword="True"/> (Button Pressed) or <see langword="false"/> (Button Released)</param>
+        /// <returns><see langword="True"/> if function succeeded. Otherwise <see langword="false"/>.</returns>
         [DllImport("vXboxInterface.dll")]
         internal static extern bool SetBtnStart(uint UserIndex, bool Press);
 
@@ -126,8 +134,8 @@ namespace vXboxInterfaceWrap {
         /// Button Back Pressed/Released
         /// </summary>
         /// <param name="UserIndex">Slot Index. Range: 1 to 4</param>
-        /// <param name="Press">TRUE (Button Pressed) or FALSE (Button Released)</param>
-        /// <returns>TRUE if function succeeded. Otherwise FALSE.</returns>
+        /// <param name="Press"><see langword="True"/> (Button Pressed) or <see langword="false"/> (Button Released)</param>
+        /// <returns><see langword="True"/> if function succeeded. Otherwise <see langword="false"/>.</returns>
         [DllImport("vXboxInterface.dll")]
         internal static extern bool SetBtnBack(uint UserIndex, bool Press);
 
@@ -135,8 +143,8 @@ namespace vXboxInterfaceWrap {
         /// Left Stick (Left Thumb) Pressed/Released
         /// </summary>
         /// <param name="UserIndex">Slot Index. Range: 1 to 4</param>
-        /// <param name="Press">TRUE (Button Pressed) or FALSE (Button Released)</param>
-        /// <returns>TRUE if function succeeded. Otherwise FALSE.</returns>
+        /// <param name="Press"><see langword="True"/> (Button Pressed) or <see langword="false"/> (Button Released)</param>
+        /// <returns><see langword="True"/> if function succeeded. Otherwise <see langword="false"/>.</returns>
         [DllImport("vXboxInterface.dll")]
         internal static extern bool SetBtnLT(uint UserIndex, bool Press);
 
@@ -144,8 +152,8 @@ namespace vXboxInterfaceWrap {
         /// Right Stick (Right Thumb) Pressed/Released
         /// </summary>
         /// <param name="UserIndex">Slot Index. Range: 1 to 4</param>
-        /// <param name="Press">TRUE (Button Pressed) or FALSE (Button Released)</param>
-        /// <returns>TRUE if function succeeded. Otherwise FALSE.</returns>
+        /// <param name="Press"><see langword="True"/> (Button Pressed) or <see langword="false"/> (Button Released)</param>
+        /// <returns><see langword="True"/> if function succeeded. Otherwise <see langword="false"/>.</returns>
         [DllImport("vXboxInterface.dll")]
         internal static extern bool SetBtnRT(uint UserIndex, bool Press);
 
@@ -153,8 +161,8 @@ namespace vXboxInterfaceWrap {
         /// Left Bumper Pressed/Released
         /// </summary>
         /// <param name="UserIndex">Slot Index. Range: 1 to 4</param>
-        /// <param name="Press">TRUE (Button Pressed) or FALSE (Button Released)</param>
-        /// <returns>TRUE if function succeeded. Otherwise FALSE.</returns>
+        /// <param name="Press"><see langword="True"/> (Button Pressed) or <see langword="false"/> (Button Released)</param>
+        /// <returns><see langword="True"/> if function succeeded. Otherwise <see langword="false"/>.</returns>
         [DllImport("vXboxInterface.dll")]
         internal static extern bool SetBtnLB(uint UserIndex, bool Press);
 
@@ -162,8 +170,8 @@ namespace vXboxInterfaceWrap {
         /// Right Bumper Pressed/Released
         /// </summary>
         /// <param name="UserIndex">Slot Index. Range: 1 to 4</param>
-        /// <param name="Press">TRUE (Button Pressed) or FALSE (Button Released)</param>
-        /// <returns>TRUE if function succeeded. Otherwise FALSE.</returns>
+        /// <param name="Press"><see langword="True"/> (Button Pressed) or <see langword="false"/> (Button Released)</param>
+        /// <returns><see langword="True"/> if function succeeded. Otherwise <see langword="false"/>.</returns>
         [DllImport("vXboxInterface.dll")]
         internal static extern bool SetBtnRB(uint UserIndex, bool Press);
 
@@ -172,7 +180,7 @@ namespace vXboxInterfaceWrap {
         /// </summary>
         /// <param name="UserIndex">Slot Index. Range: 1 to 4</param>
         /// <param name="Value">Press trigger value. Range: 0 to 255</param>
-        /// <returns>TRUE if function succeeded. Otherwise FALSE.</returns>
+        /// <returns><see langword="True"/> if function succeeded. Otherwise <see langword="false"/>.</returns>
         [DllImport("vXboxInterface.dll")]
         internal static extern bool SetTriggerL(uint UserIndex, byte Value);
 
@@ -181,7 +189,7 @@ namespace vXboxInterfaceWrap {
         /// </summary>
         /// <param name="UserIndex">Slot Index. Range: 1 to 4</param>
         /// <param name="Value">Press trigger value. Range: 0 to 255</param>
-        /// <returns>TRUE if function succeeded. Otherwise FALSE.</returns>
+        /// <returns><see langword="True"/> if function succeeded. Otherwise <see langword="false"/>.</returns>
         [DllImport("vXboxInterface.dll")]
         internal static extern bool SetTriggerR(uint UserIndex, byte Value);
 
@@ -190,7 +198,7 @@ namespace vXboxInterfaceWrap {
         /// </summary>
         /// <param name="UserIndex">Slot Index. Range: 1 to 4</param>
         /// <param name="Value">Stick Position. Range: -32768 to 32767 (Neutral point is 0)</param>
-        /// <returns>TRUE if function succeeded. Otherwise FALSE.</returns>
+        /// <returns><see langword="True"/> if function succeeded. Otherwise <see langword="false"/>.</returns>
         [DllImport("vXboxInterface.dll")]
         internal static extern bool SetAxisX(uint UserIndex, short Value);
 
@@ -199,7 +207,7 @@ namespace vXboxInterfaceWrap {
         /// </summary>
         /// <param name="UserIndex">Slot Index. Range: 1 to 4</param>
         /// <param name="Value">Stick Position. Range: -32768 to 32767 (Neutral point is 0)</param>
-        /// <returns>TRUE if function succeeded. Otherwise FALSE.</returns>
+        /// <returns><see langword="True"/> if function succeeded. Otherwise <see langword="false"/>.</returns>
         [DllImport("vXboxInterface.dll")]
         internal static extern bool SetAxisY(uint UserIndex, short Value);
 
@@ -208,7 +216,7 @@ namespace vXboxInterfaceWrap {
         /// </summary>
         /// <param name="UserIndex">Slot Index. Range: 1 to 4</param>
         /// <param name="Value">Stick Position. Range: -32768 to 32767 (Neutral point is 0)</param>
-        /// <returns>TRUE if function succeeded. Otherwise FALSE.</returns>
+        /// <returns><see langword="True"/> if function succeeded. Otherwise <see langword="false"/>.</returns>
         [DllImport("vXboxInterface.dll")]
         internal static extern bool SetAxisRx(uint UserIndex, short Value);
 
@@ -217,7 +225,7 @@ namespace vXboxInterfaceWrap {
         /// </summary>
         /// <param name="UserIndex">Slot Index. Range: 1 to 4</param>
         /// <param name="Value">Stick Position. Range: -32768 to 32767 (Neutral point is 0)</param>
-        /// <returns>TRUE if function succeeded. Otherwise FALSE.</returns>
+        /// <returns><see langword="True"/> if function succeeded. Otherwise <see langword="false"/>.</returns>
         [DllImport("vXboxInterface.dll")]
         internal static extern bool SetAxisRy(uint UserIndex, short Value);
 
@@ -225,7 +233,7 @@ namespace vXboxInterfaceWrap {
         /// D-Pad pressed UP.
         /// </summary>
         /// <param name="UserIndex">Slot Index. Range: 1 to 4</param>
-        /// <returns>TRUE if function succeeded. Otherwise FALSE.</returns>
+        /// <returns><see langword="True"/> if function succeeded. Otherwise <see langword="false"/>.</returns>
         [DllImport("vXboxInterface.dll")]
         internal static extern bool SetDpadUp(uint UserIndex);
 
@@ -233,7 +241,7 @@ namespace vXboxInterfaceWrap {
         /// D-Pad pressed DOWN.
         /// </summary>
         /// <param name="UserIndex">Slot Index. Range: 1 to 4</param>
-        /// <returns>TRUE if function succeeded. Otherwise FALSE.</returns>
+        /// <returns><see langword="True"/> if function succeeded. Otherwise <see langword="false"/>.</returns>
         [DllImport("vXboxInterface.dll")]
         internal static extern bool SetDpadDown(uint UserIndex);
 
@@ -241,7 +249,7 @@ namespace vXboxInterfaceWrap {
         /// D-Pad pressed LEFT.
         /// </summary>
         /// <param name="UserIndex">Slot Index. Range: 1 to 4</param>
-        /// <returns>TRUE if function succeeded. Otherwise FALSE.</returns>
+        /// <returns><see langword="True"/> if function succeeded. Otherwise <see langword="false"/>.</returns>
         [DllImport("vXboxInterface.dll")]
         internal static extern bool SetDpadLeft(uint UserIndex);
 
@@ -249,7 +257,7 @@ namespace vXboxInterfaceWrap {
         /// D-Pad pressed RIGHT.
         /// </summary>
         /// <param name="UserIndex">Slot Index. Range: 1 to 4</param>
-        /// <returns>TRUE if function succeeded. Otherwise FALSE.</returns>
+        /// <returns><see langword="True"/> if function succeeded. Otherwise <see langword="false"/>.</returns>
         [DllImport("vXboxInterface.dll")]
         internal static extern bool SetDpadRight(uint UserIndex);
 
@@ -257,7 +265,7 @@ namespace vXboxInterfaceWrap {
         /// D-Pad is released.
         /// </summary>
         /// <param name="UserIndex">Slot Index. Range: 1 to 4</param>
-        /// <returns>TRUE if function succeeded. Otherwise FALSE.</returns>
+        /// <returns><see langword="True"/> if function succeeded. Otherwise <see langword="false"/>.</returns>
         [DllImport("vXboxInterface.dll")]
         internal static extern bool SetDpadOff(uint UserIndex);
 
@@ -265,8 +273,8 @@ namespace vXboxInterfaceWrap {
         /// Button Guide Pressed/Released.
         /// </summary>
         /// <param name="UserIndex">Slot Index. Range: 1 to 4</param>
-        /// <param name="Press">TRUE (Button Pressed) or FALSE (Button Released)</param>
-        /// <returns>TRUE if function succeeded. Otherwise FALSE.</returns>
+        /// <param name="Press"><see langword="True"/> (Button Pressed) or <see langword="false"/> (Button Released)</param>
+        /// <returns><see langword="True"/> if function succeeded. Otherwise <see langword="false"/>.</returns>
         [DllImport("vXboxInterface.dll")]
         internal static extern bool SetBtnGD(uint UserIndex, bool Press);
         #endregion
@@ -275,38 +283,46 @@ namespace vXboxInterfaceWrap {
         // The following functions are used for getting feedback from the vXbox device. These functions poll the device.
 
         /// <summary>
-        /// Get the serial number of the LED that should light on the vXbox controller.<para/>
-        /// Note that this is not the slot number. Rather, it is a arbitrary number in
-        /// the range 1 to 4 that the system attach to the device.
+        /// Get the serial number of the LED that should light on the vXbox controller.
         /// </summary>
+        /// <remarks>
+        /// Note that this is not the slot number. Rather, it is an arbitrary number in
+        /// the range 1 to 4 that the system attaches to the device.
+        /// </remarks>
         /// <param name="UserIndex">Slot Index. Range: 1 to 4</param>
         /// <param name="pLed">The serial number of the LED. Range: 1-4</param>
-        /// <returns>TRUE if function succeeded. Otherwise FALSE.</returns>
+        /// <returns><see langword="True"/> if function succeeded. Otherwise <see langword="false"/>.</returns>
         [DllImport("vXboxInterface.dll")]
         internal static extern bool GetLedNumber(uint UserIndex, uint pLed);
 
         /// <summary>
-        /// The left motor is the low-frequency rumble motor. The right motor is the high-frequency rumble motor.<para/>
-        /// The two motors are not the same, and they create different vibration effects.
+        /// The left motor is the low-frequency rumble motor. The right motor is the high-frequency rumble motor.
         /// </summary>
+        /// <remarks>
+        /// The two motors are not the same, and they create different vibration effects.
+        /// </remarks>
         internal struct PXINPUT_VIBRATION {
             /// <summary>
-            /// Speed of the left motor.<para/>
-            /// Valid values are in the range 0 to 65,535. Zero signifies no motor use; 65,535 signifies 100 percent motor use.
+            /// Speed of the left motor.
             /// </summary>
+            /// <remarks>
+            /// Valid values are in the range 0 to 65,535. Zero signifies no motor use; 65,535 signifies 100 percent motor use.
+            /// </remarks>
             internal ushort wLeftMotorSpeed;
             /// <summary>
             /// Speed of the right motor.<para/>
-            /// Valid values are in the range 0 to 65,535. Zero signifies no motor use; 65,535 signifies 100 percent motor use.
             /// </summary>
+            /// <remarks>
+            /// Valid values are in the range 0 to 65,535. Zero signifies no motor use; 65,535 signifies 100 percent motor use.
+            /// </remarks>
             internal ushort wRightMotorSpeed;
         }
         /// <summary>
         /// Get the vibration intensity of each of the two vibrating motors.
         /// </summary>
         /// <param name="UserIndex">Slot Index. Range: 1 to 4</param>
-        /// <param name="pVib">Structure holding the output data. (See description)</param>
-        /// <returns>TRUE if function succeeded. Otherwise FALSE.</returns>
+        /// <param name="pVib">Structure holding the output data.</param>
+        /// <returns><see langword="True"/> if function succeeded. Otherwise <see langword="false"/>.</returns>
         [DllImport("vXboxInterface.dll")]
         internal static extern bool GetVibration(uint UserIndex, ref PXINPUT_VIBRATION pVib);
 
@@ -373,7 +389,7 @@ namespace vXboxInterfaceWrap {
 
         /// <exception cref="ArgumentException">When the slot index is outside the range 1 to 4.</exception>
         /// <param name="index">Slot index of the vXbox device that this object should manage. Range: 1 to 4.</param>
-        /// <param name="forceOwnership">If true, forces an un-plug before trying to acquire the device. Warning: This parameter may remove a vXbox device that is owned by another process.</param>
+        /// <param name="forceOwnership">If <see langword="true"/>, forces an un-plug before trying to acquire the device. Warning: This parameter may remove a vXbox device that is owned by another process.</param>
         public VirtualXboxController(uint index, bool forceOwnership = false)
         {
             if (index < 1 || index > 4) 
@@ -382,16 +398,17 @@ namespace vXboxInterfaceWrap {
             SlotIndex = index;
 
 #if DEBUG
-            System.Diagnostics.Debug.WriteLine("###################");
-            System.Diagnostics.Debug.WriteLine($"# Virtual Bus exists?: {VirtualXboxInterface.isVBusExists()}");
-            System.Diagnostics.Debug.WriteLine($"# Controller {SlotIndex} exists?: {VirtualXboxInterface.isControllerExists(SlotIndex)}");
+            System.Diagnostics.Debug.WriteLine("╔══════════════════════════════════");
+            System.Diagnostics.Debug.WriteLine($"║ Plugging VirtualXboxController into slot {SlotIndex} ...");
+            System.Diagnostics.Debug.WriteLine($"║ Virtual Bus exists?: {VirtualXboxInterface.isVBusExists()}");
 #endif
 
             Acquire(forceOwnership);
 
 #if DEBUG
-            System.Diagnostics.Debug.WriteLine($"# Controller {SlotIndex} acquired?: {Acquired}");
-            System.Diagnostics.Debug.WriteLine("###################");
+            System.Diagnostics.Debug.WriteLine($"║ Controller {SlotIndex} exists?: {VirtualXboxInterface.isControllerExists(SlotIndex)}");
+            System.Diagnostics.Debug.WriteLine($"║ Controller {SlotIndex} acquired?: {Acquired}");
+            System.Diagnostics.Debug.WriteLine("╚══════════════════════════════════");
 #endif
             Reset();
         }
@@ -400,9 +417,9 @@ namespace vXboxInterfaceWrap {
         /// <summary>
         /// Connect to the virtual controller.
         /// </summary>
-        /// <returns>TRUE if operation succeeds. Otherwise FALSE.</returns>
+        /// <returns><see langword="True"/> if operation succeeds. Otherwise <see langword="false"/>.</returns>
         /// <exception cref="InvalidOperationException">When the virtual bus was not found.</exception>
-        /// <param name="force">If true, forces an un-plug before trying to acquire the device. Warning: This parameter may remove a vXbox device that is owned by another process.</param>
+        /// <param name="force">If <see langword="true"/>, forces an un-plug before trying to acquire the device. Warning: This parameter may remove a vXbox device that is owned by another process.</param>
         public bool Acquire(bool force = false)
         {
             if (!VirtualXboxInterface.isVBusExists())
@@ -415,9 +432,9 @@ namespace vXboxInterfaceWrap {
         /// <summary>
         /// Disconnect from the virtual controller.
         /// </summary>
-        /// <returns>TRUE if operation succeeds. Otherwise FALSE.</returns>
+        /// <returns><see langword="True"/> if operation succeeds. Otherwise <see langword="false"/>.</returns>
         /// <exception cref="InvalidOperationException">When the virtual bus was not found.</exception>
-        /// <param name="force">If true, forces an un-plug of the device. Warning: This parameter may remove a vXbox device that is owned by another process.</param>
+        /// <param name="force">If <see langword="true"/>, forces an un-plug of the device. Warning: This parameter may remove a vXbox device that is owned by another process.</param>
         public bool Release(bool force = false)
         {
             if (!VirtualXboxInterface.isVBusExists())
@@ -439,7 +456,7 @@ namespace vXboxInterfaceWrap {
         /// <summary>
         /// Checks if the vXbox device is ready and functional.
         /// </summary>
-        /// <returns>TRUE if the virtual bus and the controller exists. Otherwise FALSE.</returns>
+        /// <returns><see langword="True"/> if the virtual bus and the controller exists. Otherwise <see langword="false"/>.</returns>
         public bool Exists()
         {
             return VirtualXboxInterface.isVBusExists() && VirtualXboxInterface.isControllerExists(SlotIndex);
@@ -449,7 +466,7 @@ namespace vXboxInterfaceWrap {
         /// <summary>
         /// Centers all axis of both - left and right - virtual sticks.
         /// </summary>
-        /// <returns>TRUE if every axis were successfully reset. Otherwise FALSE.</returns>
+        /// <returns><see langword="True"/> if every axis were successfully reset. Otherwise <see langword="false"/>.</returns>
         public bool ResetAxis()
         {
             return SetAxisX(0) && SetAxisY(0)
@@ -461,7 +478,7 @@ namespace vXboxInterfaceWrap {
         /// <summary>
         /// Releases all buttons.
         /// </summary>
-        /// <returns>TRUE if all buttons were successfully released. Otherwise FALSE.</returns>
+        /// <returns><see langword="True"/> if all buttons were successfully released. Otherwise <see langword="false"/>.</returns>
         public bool ResetButtons()
         {
             var success = true;
@@ -474,7 +491,7 @@ namespace vXboxInterfaceWrap {
         /// <summary>
         /// Resets this virtual device to its neutral state, resetting every axis and all buttons.
         /// </summary>
-        /// <returns>TRUE if everything was successfully reset. Otherwise FALSE.</returns>
+        /// <returns><see langword="True"/> if everything was successfully reset. Otherwise <see langword="false"/>.</returns>
         public bool Reset()
         {
             return ResetAxis() && ResetButtons();
@@ -485,7 +502,7 @@ namespace vXboxInterfaceWrap {
         /// <summary>
         /// Sets the <c>X</c>-axis of the left stick.
         /// </summary>
-        /// <returns>TRUE if operation succeeds. Otherwise FALSE.</returns>
+        /// <returns><see langword="True"/> if operation succeeds. Otherwise <see langword="false"/>.</returns>
         public bool SetAxisX(int value)
         {
             return VirtualXboxInterface.SetAxisX(SlotIndex, (short)value.Clamp(AXIS_MIN, AXIS_MAX));
@@ -495,7 +512,7 @@ namespace vXboxInterfaceWrap {
         /// <summary>
         /// Sets the <c>Y</c>-axis of the left stick.
         /// </summary>
-        /// <returns>TRUE if operation succeeds. Otherwise FALSE.</returns>
+        /// <returns><see langword="True"/> if operation succeeds. Otherwise <see langword="false"/>.</returns>
         public bool SetAxisY(int value)
         {
             return VirtualXboxInterface.SetAxisY(SlotIndex, (short)value.Clamp(AXIS_MIN, AXIS_MAX));
@@ -505,7 +522,7 @@ namespace vXboxInterfaceWrap {
         /// <summary>
         /// Sets the <c>X</c>-axis of the right stick.
         /// </summary>
-        /// <returns>TRUE if operation succeeds. Otherwise FALSE.</returns>
+        /// <returns><see langword="True"/> if operation succeeds. Otherwise <see langword="false"/>.</returns>
         public bool SetAxisRx(int value)
         {
             return VirtualXboxInterface.SetAxisRx(SlotIndex, (short)value.Clamp(AXIS_MIN, AXIS_MAX));
@@ -515,7 +532,7 @@ namespace vXboxInterfaceWrap {
         /// <summary>
         /// Sets the <c>Y</c>-axis of the right stick.
         /// </summary>
-        /// <returns>TRUE if operation succeeds. Otherwise FALSE.</returns>
+        /// <returns><see langword="True"/> if operation succeeds. Otherwise <see langword="false"/>.</returns>
         public bool SetAxisRy(int value)
         {
             return VirtualXboxInterface.SetAxisRy(SlotIndex, (short)value.Clamp(AXIS_MIN, AXIS_MAX));
@@ -527,9 +544,9 @@ namespace vXboxInterfaceWrap {
         /// </summary>
         /// <param name="button">The button that you want pressed.</param>
         /// <param name="pressure">Pressure amount if <c>button</c> is the <c>Left</c>- or <c>RightTrigger</c>. Range: 0-255.
-        /// A value of 0 means the trigger will be released.
+        ///  A value of 0 means the trigger will be released.
         /// </param>
-        /// <returns>TRUE if operation succeeds. Otherwise FALSE.</returns>
+        /// <returns><see langword="True"/> if operation succeeds. Otherwise <see langword="false"/>.</returns>
         public bool Press(Button button, byte pressure = 255)
         {
             if (pressure == 0) Release(button);
@@ -562,7 +579,7 @@ namespace vXboxInterfaceWrap {
         /// </summary>
         /// <param name="button">The button that you want released.</param>
         /// <param name="delay">Delay in milliseconds before the button is released.</param>
-        /// <returns>TRUE if operation succeeds. Otherwise FALSE.</returns>
+        /// <returns><see langword="True"/> if operation succeeds. Otherwise <see langword="false"/>.</returns>
         public bool Release(Button button, int delay = 100)
         {
             if (delay > 0) Thread.Sleep(delay);
@@ -595,7 +612,7 @@ namespace vXboxInterfaceWrap {
         /// <summary>
         /// Presses and then immediately releases a button once.
         /// </summary>
-        /// <returns>TRUE if the button was successfully pressed and released. Otherwise FALSE.</returns>
+        /// <returns><see langword="True"/> if the button was successfully pressed and released. Otherwise <see langword="false"/>.</returns>
         public bool Stroke(Button button)
         {
             var success = Press(button);
@@ -606,7 +623,7 @@ namespace vXboxInterfaceWrap {
         /// <summary>
         /// Presses and then immediately releases a button given the specified times.
         /// </summary>
-        /// <returns>TRUE if the button was successfully pressed and released in every iteration. Otherwise FALSE.</returns>
+        /// <returns><see langword="True"/> if the button was successfully pressed and released in every iteration. Otherwise <see langword="false"/>.</returns>
         public bool Stroke(Button button, int times)
         {
             var success = true;
@@ -619,7 +636,7 @@ namespace vXboxInterfaceWrap {
         /// <summary>
         /// Presses and then immediately releases multiple buttons.
         /// </summary>
-        /// <returns>TRUE if all buttons were successfully pressed and released. Otherwise FALSE.</returns>
+        /// <returns><see langword="True"/> if all buttons were successfully pressed and released. Otherwise <see langword="false"/>.</returns>
         public bool Stroke(Button[] buttons)
         {
             var success = true;
@@ -630,10 +647,12 @@ namespace vXboxInterfaceWrap {
 
 
         /// <summary>
-        /// Presses and then immediately releases multiple buttons using a leading button as modifier which is released last.</para>
-        /// The buttons are released in reverse order.
+        /// Presses and then immediately releases multiple buttons using a leading button as modifier which is released last.
         /// </summary>
-        /// <returns>TRUE if all buttons were successfully pressed and released. Otherwise FALSE.</returns>
+        /// <remarks>
+        /// The buttons are released in reverse order.
+        /// </remarks>
+        /// <returns><see langword="True"/> if all buttons were successfully pressed and released. Otherwise <see langword="false"/>.</returns>
         public bool Stroke(Button modifier, Button[] buttons)
         {
             var success = Press(modifier);
@@ -648,7 +667,7 @@ namespace vXboxInterfaceWrap {
         /// <summary>
         /// Presses and then immediately releases a button using a leading button as modifier which is released last.
         /// </summary>
-        /// <returns>TRUE if all buttons were successfully pressed and released. Otherwise FALSE.</returns>
+        /// <returns><see langword="True"/> if all buttons were successfully pressed and released. Otherwise <see langword="false"/>.</returns>
         public bool Stroke(Button modifier, Button button)
         {
             var success = Press(modifier);
@@ -661,7 +680,7 @@ namespace vXboxInterfaceWrap {
 
 
         /// <summary>
-        /// Gets the current vibration percentages of the left and right rumble motors.<para/>
+        /// Gets the current vibration percentages of the left and right rumble motors.
         /// </summary>
         /// <exception cref="InvalidOperationException">When the vibration values weren't retrievable.</exception>
         /// <returns>A tuple in which the first item contains the utilization percentage of the low-frequency rumble motor and<para/>
